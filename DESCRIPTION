@@ -1,19 +1,23 @@
 Package: linregPackage
-Title: What the Package Does (One Line, Title Case)
+Title: Linear Regression Using Linear Algebra
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Fits linear regression models using ordinary least squares
+    computed with linear algebra, and provides print, summary, plot,
+    coefficient, residual and prediction methods for the fitted models.
+License: MIT + file LICENSE
 Config/roxygen2/version: 8.1.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Imports: 
-    ggplot2
+    ggplot2,
+    stats,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+RoxygenNote: 7.3.3
