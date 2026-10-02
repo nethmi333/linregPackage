@@ -1,0 +1,49 @@
+---
+title: "linreg"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{linreg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(linregPackage)
+```
+
+## Fitting a Model
+
+```{r fit}
+data("iris")
+mod <- linreg(Petal.Length ~ Species, data = iris)
+```
+
+## Model Output and Methods
+
+```{r print}
+print(mod)
+```
+
+```{r coef}
+coef(mod)
+```
+
+```{r pred_resid}
+head(pred(mod))
+head(resid(mod))
+```
+
+```{r summary}
+summary(mod)
+```
+
+```{r plot, fig.width=7, fig.height=5}
+plot(mod)
+```
