@@ -17,3 +17,8 @@ An object of class \code{linreg}.
 \description{
 Fits a linear regression model using linear algebra.
 }
+\examples{
+mod <- linreg(Petal.Length ~ Sepal.Width + Sepal.Length, data = iris)
+print(mod)
+summary(mod)
+}
