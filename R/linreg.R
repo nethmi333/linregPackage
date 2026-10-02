@@ -6,7 +6,13 @@
 #' @param data A data frame containing the variables.
 #'
 #' @return An object of class \code{linreg}.
+#' @importFrom stats model.frame model.matrix pt printCoefmat coef residuals
+#' @importFrom utils globalVariables
 #' @export
+#' @examples
+#' mod <- linreg(Petal.Length ~ Sepal.Width + Sepal.Length, data = iris)
+#' print(mod)
+#' summary(mod)
 linreg <- function(formula, data){
   mf <- model.frame(formula,data)
   X <- model.matrix(formula,mf)
@@ -62,6 +68,20 @@ linreg <- function(formula, data){
 
 }
 
+#' Methods for linreg objects
+#'
+#' Print, summarise, plot and extract results from a fitted \code{linreg} model.
+#'
+#' @param x,object An object of class \code{linreg}.
+#' @param ... Further arguments (currently unused).
+#'
+#' @return \code{print}, \code{summary} and \code{plot} are called for their
+#'   side effects. \code{resid}/\code{residuals} returns the residuals,
+#'   \code{pred} the fitted values and \code{coef} the named coefficients.
+#' @name linreg-methods
+NULL
+
+#' @rdname linreg-methods
 #' @export
 print.linreg <- function(x, ...) {
   cat("Call:\n")
@@ -74,6 +94,7 @@ print.linreg <- function(x, ...) {
   print(coef_vector)
 }
 
+#' @rdname linreg-methods
 #' @export
 #' @import ggplot2
 plot.linreg <- function(x, ...) {
@@ -127,21 +148,25 @@ plot.linreg <- function(x, ...) {
   print(p2)
 }
 
+#' @rdname linreg-methods
 #' @export
-resid.linreg <- function(object, ...) {
+residuals.linreg <- function(object, ...) {
   return(as.vector(object$residuals))
 }
 
+#' @rdname linreg-methods
 #' @export
 pred <- function(object, ...) {
   UseMethod("pred")
 }
 
+#' @rdname linreg-methods
 #' @export
 pred.linreg <- function(object, ...) {
   return(as.vector(object$fitted_values))
 }
 
+#' @rdname linreg-methods
 #' @export
 coef.linreg <- function(object, ...) {
   coef_vec <- as.vector(object$coefficients)
@@ -153,6 +178,7 @@ coef.linreg <- function(object, ...) {
   return(coef_vec)
 }
 
+#' @rdname linreg-methods
 #' @export
 summary.linreg <- function(object, ...) {
   cat("Call:\n")
@@ -177,5 +203,4 @@ summary.linreg <- function(object, ...) {
   cat("\nResidual standard error:", sqrt(object$residual_variance), "on", object$df_residual, "degrees of freedom\n")
 }
 
-
-
+utils::globalVariables(c("Fitted", "Residuals", "Sqrt_Abs_Std_Res", "Observation"))
