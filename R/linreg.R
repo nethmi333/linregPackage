@@ -63,9 +63,41 @@ linreg <- function(formula, data){
   class(out) <- "linreg"
 
   return(out)
+}
 
-
-
+#' Custom ggplot2 theme for Linköping University (LiU)
+#'
+#' @param base_size Base font size (default: 11)
+#' @param base_family Base font family (default: "sans")
+#'
+#' @return A ggplot2 theme object
+#' @export
+theme_liu <- function(base_size = 11, base_family = "sans") {
+  ggplot2::theme_minimal(base_size = base_size, base_family = base_family) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
+        color = "#00b0f0",
+        face = "bold",
+        size = ggplot2::rel(1.2),
+        margin = ggplot2::margin(b = 6)
+      ),
+      plot.subtitle = ggplot2::element_text(
+        color = "#555555",
+        size = ggplot2::rel(0.9),
+        margin = ggplot2::margin(b = 10)
+      ),
+      axis.title = ggplot2::element_text(
+        color = "#1A1A1A",
+        face = "bold",
+        size = ggplot2::rel(0.9)
+      ),
+      axis.text = ggplot2::element_text(color = "#333333"),
+      panel.grid.major = ggplot2::element_line(color = "#E0E0E0", linewidth = 0.4),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.background = ggplot2::element_rect(fill = "#FFFFFF", color = NA),
+      plot.background = ggplot2::element_rect(fill = "#FFFFFF", color = NA),
+      legend.position = "bottom"
+    )
 }
 
 #' Methods for linreg objects
@@ -73,7 +105,7 @@ linreg <- function(formula, data){
 #' Print, summarise, plot and extract results from a fitted \code{linreg} model.
 #'
 #' @param x,object An object of class \code{linreg}.
-#' @param ... Further arguments (currently unused).
+#' @param ... Further arguments.
 #'
 #' @return \code{print}, \code{summary} and \code{plot} are called for their
 #'   side effects. \code{resid}/\code{residuals} returns the residuals,
@@ -127,7 +159,7 @@ plot.linreg <- function(x, ...) {
       x = paste0("Fitted values\nlinreg(", deparse(x$formula), ")"),
       y = "Residuals"
     ) +
-    ggplot2::theme_light()
+    theme_liu()
 
   p2 <- ggplot2::ggplot(df_plot, ggplot2::aes(x = Fitted, y = Sqrt_Abs_Std_Res)) +
     ggplot2::geom_point(shape = 21, color = "#00b0f0", fill = "#00b0f0", alpha = 0.7) +
@@ -142,7 +174,7 @@ plot.linreg <- function(x, ...) {
       x = paste0("Fitted values\nlinreg(", deparse(x$formula), ")"),
       y = expression(sqrt("|Standardized residuals|"))
     ) +
-    ggplot2::theme_light()
+    theme_liu()
 
   print(p1)
   print(p2)
